@@ -1,17 +1,18 @@
-FROM python:3.11-alpine
-
+FROM python:3.10-alpine
 ENV PYTHONUNBUFFERED 1
 
-COPY ./requirements.txt /requirements.txt
-RUN apk add --update --no-cache postgresql-client
-RUN apk add --update --no-cache --virtual .tmp-build-deps \
-      gcc libc-dev linux-headers postgresql-dev
-RUN pip install -r /requirements.txt
-RUN apk del .tmp-build-deps
+WORKDIR /app
+ADD ./ /app
 
-RUN mkdir /lunchservice
-WORKDIR /lunchservice
-COPY ./lunchservice /lunchservice
+RUN apk update
 
-RUN adduser -D user
-USER user
+RUN pip install --upgrade pip
+
+RUN apk update \
+    && apk add --virtual build-deps gcc python3-dev musl-dev \
+    && apk add jpeg-dev zlib-dev libjpeg \
+    && apk del build-deps
+
+RUN pip install -r requirements.txt
+# RUN pip install -r requirements.txt --verbose
+
