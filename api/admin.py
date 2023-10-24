@@ -1,9 +1,13 @@
 from django.contrib import admin
-from .models import Restaurant, Menu, Employee, Vote
+from .models import Restaurant, Menu, Employee, Vote, Winner
 
-# Register your models here.
-admin.site.register(Restaurant)
-admin.site.register(Menu)
+class MenuInline(admin.TabularInline):
+    model = Menu
+
+class RestaurantAdmin(admin.ModelAdmin):
+    inlines = [MenuInline]
+
+admin.site.register(Restaurant, RestaurantAdmin)
 admin.site.register(Employee)
 admin.site.register(Vote)
-# admin.site.register(Winner)
+admin.site.register(Winner)

@@ -57,4 +57,4 @@ class Winner(models.Model):
     winning_date = models.DateField(default=timezone.now)
 
     def __str__(self):
-        return f"Winner for {self.date}: {self.restaurant.name}"
+        return f"Winner for {self.winning_date}: {self.restaurant.name}"

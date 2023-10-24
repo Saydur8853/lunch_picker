@@ -44,14 +44,14 @@ class VoteSerializer(serializers.ModelSerializer):
 
 
 class RestaurantWinnerSerializer(serializers.ModelSerializer):
-    restaurant = EmployeeSerializer(read_only=True)
     menu = MenuSerializer(read_only=True)
+    wining_restaurant = serializers.CharField(source='menu.restaurant.name', read_only=True)
 
     class Meta:
         model = Winner
         fields = '__all__'
         read_only_fields = [
             "id",
-            "restaurant",
             "menu",
+            "wining_restaurant",
         ]
