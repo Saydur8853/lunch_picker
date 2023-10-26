@@ -4,13 +4,14 @@
 
 To run this project, locally using docker:
 ```
-$ sudo docker-compose build
-$ sudo docker-compose up
+$ docker-compose build
+$ docker-compose up
 ```
 Create migrations and apply them to the database.
 ```
 $ docker-compose exec web python manage.py makemigrations
 $ docker-compose exec web python manage.py migrate
+$ docker-compose exec web python manage.py createsuperuser
 ```
 Test it out at http://localhost:8000
 ## API Endpoints
